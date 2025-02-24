@@ -10,4 +10,5 @@ module.exports = {
   serverRuntimeConfig: {
     PUBLIC_PATH: __dirname + '/public',
   },
+  basePath: '/admin',
 };
