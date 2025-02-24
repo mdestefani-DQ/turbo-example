@@ -11,6 +11,16 @@ services:
       - 3000:3000
     networks:
       - app_network
+  web-admin:
+    container_name: web-admin
+    build:
+      context: .
+      dockerfile: ./apps/web-admin/Dockerfile
+    restart: always
+    ports:
+      - 3002:3002
+    networks:
+      - app_network
   api:
     container_name: api
     build:
