@@ -7,4 +7,7 @@ module.exports = {
   experimental: {
     outputFileTracingRoot: path.join(__dirname, "../../"),
   },
+  serverRuntimeConfig: {
+    PUBLIC_PATH: __dirname + '/public',
+  },
 };
