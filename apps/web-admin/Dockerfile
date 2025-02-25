@@ -18,7 +18,7 @@ WORKDIR /app
 COPY --from=builder /app/out/json/ .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 COPY --from=builder /app/out/full/ .
-RUN pnpm turbo build --filter=web-admin
+RUN turbo build --filter=web-admin
 
 FROM base AS runner
 WORKDIR /app
