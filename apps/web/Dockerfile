@@ -4,14 +4,13 @@ FROM base AS base-dev
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
-RUN pnpm i -g turbo
 
 FROM base-dev AS builder
 RUN apk update
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
-RUN pnpm i -g add turbo
 COPY . .
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN turbo prune web --docker
 
 FROM base-dev AS installer
