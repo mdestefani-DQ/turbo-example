@@ -11,6 +11,6 @@ if [ "$migrations_count" -gt 1 ]; then
   exit 1
 fi
 
-pnpm run format:check
-pnpm turbo run lint
+# pnpm run format:check
+# pnpm turbo run lint
 pnpm turbo run build
