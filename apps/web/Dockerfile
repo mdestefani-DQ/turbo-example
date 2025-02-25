@@ -9,7 +9,7 @@ RUN corepack enable
 WORKDIR /app
 RUN pnpm i -g add turbo
 COPY . .
-RUN turbo prune web-admin --docker
+RUN turbo prune web --docker
 
 FROM base AS installer
 RUN apk update
@@ -28,8 +28,8 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 USER nextjs
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web-admin/.next/standalone ./
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web-admin/.next/static ./apps/web-admin/.next/static
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web-admin/public ./apps/web-admin/public
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 
-CMD node apps/web-admin/server.js
+CMD node apps/web/server.js
