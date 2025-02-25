@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+migrations_cunt=0
+while IFS= read i; do
+  if [[ $i == supabase/migrations/* ]]; then
+    ((migrations_cunt++))
+  fi
+done < <(git diff --staged --name-only | sed 1d)
+if [ "$migrations_cunt" -gt 1 ]; then
+  echo "Found more than one staged migration file, please make sure you commit only one migration file at a time."
+  exit 1
+fi
+
+pnpm run format:check
+pnpm run turbo:lint
+pnpm run turbo:build
