@@ -9,9 +9,8 @@ FROM base-dev AS builder
 RUN apk update
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
-RUN pnpm i -g add turbo
 COPY . .
-RUN turbo prune web-admin --docker
+RUN pnpm turbo prune web-admin --docker
 
 FROM base-dev AS installer
 RUN apk update

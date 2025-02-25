@@ -8,7 +8,8 @@
     "turbo:dev": "turbo dev",
     "turbo:lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\""
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
+    "cleanup": "turbo run clean && rm -rf .turbo && rm -rf node_modules"
   },
   "dependencies": {},
   "devDependencies": {
