@@ -9,9 +9,8 @@
     "turbo:lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
-    "cleanup": "turbo run clean && rm -rf .turbo && rm -rf node_modules"
+    "cleanup": "rm -rf .turbo && rm -rf node_modules"
   },
-  "dependencies": {},
   "devDependencies": {
     "eslint": "^9.21.0",
     "prettier": "^3.5.2",
@@ -20,7 +19,13 @@
     "typescript": "^5.6.3"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22",
+    "pnpm": ">= 10"
   },
-  "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af"
+  "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "turbo"
+    ]
+  }
 }
