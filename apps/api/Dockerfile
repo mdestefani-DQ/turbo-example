@@ -11,8 +11,8 @@ FROM base-dev AS builder
 WORKDIR /app
 COPY . .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN turbo prune api --docker
-RUN turbo build --filter=api
+RUN pnpm turbo prune api --docker
+RUN pnpm turbo build --filter=api
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
 FROM base AS runner
