@@ -1,26 +1,24 @@
 FROM node:22-alpine AS base
 
 FROM base AS base-dev
+RUN apk update
+RUN apk add --no-cache libc6-compat
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
 FROM base-dev AS builder
-RUN apk update
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY . .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN turbo prune web --docker
 
 FROM base-dev AS installer
-RUN apk update
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY --from=builder /app/out/json/ .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 COPY --from=builder /app/out/full/ .
-RUN pnpm turbo run build
+RUN pnpm turbo run build --filter=web
 
 FROM base AS runner
 WORKDIR /app
