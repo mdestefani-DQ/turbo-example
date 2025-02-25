@@ -4,6 +4,7 @@ FROM base AS base-dev
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
+RUN pnpm i -g turbo
 
 FROM base-dev AS builder
 RUN apk update
