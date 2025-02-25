@@ -12,20 +12,15 @@ WORKDIR /app
 COPY . .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm turbo prune web-admin --docker
-
-FROM base-dev AS installer
-WORKDIR /app
-COPY --from=builder /app/out/json/ .
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
-COPY --from=builder /app/out/full/ .
 RUN turbo build --filter=web-admin
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
 FROM base AS runner
 WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 USER nextjs
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web-admin/.next/standalone ./
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web-admin/.next/static ./apps/web-admin/.next/static
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web-admin/public ./apps/web-admin/public
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web-admin/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web-admin/.next/static ./apps/web-admin/.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web-admin/public ./apps/web-admin/public
 CMD node apps/web-admin/server.js
