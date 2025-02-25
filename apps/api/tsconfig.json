@@ -1,7 +1,9 @@
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "lib": ["ES2015"],
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "lib": ["ES6"],
     "outDir": "./dist",
     "rootDir": "./src"
   },
