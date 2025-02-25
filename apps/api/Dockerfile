@@ -1,17 +1,19 @@
 FROM node:22-alpine AS base
 
-FROM base AS builder
-RUN apk update
-RUN apk add --no-cache libc6-compat
+FROM base AS base-dev
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
+
+FROM base-dev AS builder
+RUN apk update
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 RUN pnpm i -g turbo
 COPY . .
 RUN turbo prune api --docker
 
-FROM base AS installer
+FROM base-dev AS installer
 RUN apk update
 RUN apk add --no-cache libc6-compat
 ENV PNPM_HOME="/pnpm"

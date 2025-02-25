@@ -12,5 +12,5 @@ if [ "$migrations_count" -gt 1 ]; then
 fi
 
 pnpm run format:check
-pnpm run turbo:lint
-pnpm run turbo:build
+pnpm turbo run lint
+pnpm turbo run build
